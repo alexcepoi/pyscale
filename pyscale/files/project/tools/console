@@ -1,0 +1,25 @@
+#! /usr/bin/env python2.6
+# -*- coding: utf-8 -*-
+
+import sys
+
+from pyscale.tools.console import main
+from pyscale.tools.console import api as _api
+from pyscale.tools.console import reinit as _reinit
+
+
+self = sys.modules[__name__]
+self.sockets = []
+
+
+def api(modules=None):
+	if modules == None:
+		modules = self.all
+	
+	_api(modules)
+
+def reinit(info=True):
+	_reinit(self, info)
+
+
+main(self)

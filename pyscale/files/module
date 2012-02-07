@@ -1,0 +1,16 @@
+#! /usr/bin/env python2.6
+# -*- coding: utf-8 -*-
+
+import logging
+
+from lib.module import Module
+
+
+# Module
+class {{module}}(Module):
+	pass
+
+
+# main
+if __name__  == '__main__':
+	{{module}}().run()

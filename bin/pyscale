@@ -1,0 +1,21 @@
+#! /usr/bin/env python2.6
+# -*- coding: utf-8 -*-
+
+import sys
+
+from cake.color import puts, fore
+from pyscale.lib import PyscaleError
+from pyscale.tools.generators import new, generate
+
+
+# main
+if __name__  == '__main__':
+	command, arg = sys.argv[1:]
+
+	try:
+		if command in ['new', 'n']:
+			new(arg)
+		elif command in ['generate', 'g']:
+			generate(arg)
+	except PyscaleError as ex:
+		puts(fore.red(ex))

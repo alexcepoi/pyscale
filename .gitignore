@@ -1,0 +1,12 @@
+# temp files
+**pyc
+**pyo
+
+# swap files
+**swp
+**~
+
+# build directory (setup.py)
+build/
+dist/
+**pyscale.egg-info/
