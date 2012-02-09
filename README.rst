@@ -69,7 +69,7 @@ You can also issue requests on all available modules:
   self.multisock('*').method()
 
 
-To spawn another gevent greenlet in a current module:
+To spawn another greenlet in a module either use the 'job' decorator or:
 
 ::
 
