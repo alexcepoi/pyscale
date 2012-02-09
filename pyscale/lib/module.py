@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import inspect
-import types
 import logging
 import os
 import os.path as osp
@@ -54,7 +53,7 @@ class BaseModule(object):
 		for base in bases:
 			for func in base.__dict__.values():
 				if getattr(func, 'job', None):
-					method = types.MethodType(func, self, self.__class__)
+					method = func.__get__(self, self.__class__)
 					self.jobs.spawn(method)
 
 

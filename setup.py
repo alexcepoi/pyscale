@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
 	name = 'pyscale',
-	version = '0.1',
+	version = '0.1.1',
 
 	platforms = 'linux',
 	license = 'GPLv3',
