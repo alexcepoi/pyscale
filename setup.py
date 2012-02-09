@@ -25,6 +25,6 @@ setup(
 	maintainer = 'Alexandru Cepoi',
 	maintainer_email = 'alex.cepoi@gmail.com',
 
-	install_requires = ['pyzmq', 'gevent', 'gevent_zeromq', 'cake', 'nose', 'jinja2'],
+	install_requires = ['pyzmq', 'gevent', 'gevent_zeromq', 'cake', 'argparse', 'jinja2', 'nose'],
 )
 

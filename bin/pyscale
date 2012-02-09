@@ -2,20 +2,31 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import argparse
 
 from cake.color import puts, fore
 from pyscale.lib import PyscaleError
 from pyscale.tools.generators import new, generate
 
 
+class Parser(argparse.ArgumentParser):
+	def error(self, msg):
+		puts(fore.red('ERROR: %s\n' % msg))
+		self.print_help()
+		sys.exit(2)
+
 # main
 if __name__  == '__main__':
-	command, arg = sys.argv[1:]
+	parser = Parser()
+	parser.add_argument('command', metavar='command', choices=('new', 'n', 'generate', 'g'), help='n(ew), g(enerate)')
+	parser.add_argument('name', help='project or module name')
+
+	args = parser.parse_args()
 
 	try:
-		if command in ['new', 'n']:
-			new(arg)
-		elif command in ['generate', 'g']:
-			generate(arg)
+		if args.command in ['new', 'n']:
+			new(args.name)
+		elif args.command in ['generate', 'g']:
+			generate(args.name)
 	except PyscaleError as ex:
 		puts(fore.red(ex))

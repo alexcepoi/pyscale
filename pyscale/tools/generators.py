@@ -3,41 +3,65 @@
 
 import os
 import os.path as osp
+import pydoc
 import shutil
 
 import jinja2
 
 import pyscale
 from cake.lib import recurse_up
+from cake.color import puts, fore
 
 from ..lib import PyscaleError
+
+
+def find_project():
+	current = os.getcwd()
+	return recurse_up(current, 'Cakefile')
+
 
 def new(projname):
 	""" create new project from default files """
 
-	if osp.isdir(projname):
+	# find project template
+	if find_project() != False:
+		raise PyscaleError('Inside another project. Aborting...')
+	elif osp.isdir(projname):
 		raise PyscaleError('Folder already exists. Aborting...')
 	else:
 		project = osp.join(pyscale.__path__[0], 'files', 'project')
-		shutil.copytree(project, projname)
+
+	# copy project template
+	def ignore(dirname, names):
+		common = osp.commonprefix([project, dirname])
+
+		puts(fore.green('   init ') + osp.join(projname, dirname[len(common)+1:]))
+		return []
+
+	shutil.copytree(project, projname, ignore=ignore)
 
 
 def generate(modname):
 	""" generate new module """
 
-	# go to project root
-	current = os.getcwd()
-	root = recurse_up(current, 'Cakefile')
+	# check for valid name
+	if modname.lower() in pydoc.Helper.keywords.keys():
+		raise PyscaleError('%s is a Python keyword.' % repr(modname.lower()))
 
-	if root:
+	# go to project root
+	root = find_project()
+	if root != False:
 		os.chdir(root)
 	else:
-		raise PyscaleError('Cakefile not found')
+		raise PyscaleError('Pyscale project not found (missing Cakefile?)')
 
 
 	# create folder
 	folder = 'app/%s' % modname
-	if not osp.isdir(folder):
+	if osp.isdir(folder):
+		puts(fore.yellow(' exists ') + folder)
+	else:
+		puts(fore.green('  mkdir ') + folder)
 		os.makedirs(folder)
 
 	
@@ -52,5 +76,6 @@ def generate(modname):
 			tpl = jinja2.Template(f.read())
 			tpl = tpl.render(module=modname.title())
 
+		puts(fore.green(' create ') + modfile)
 		with open(modfile, 'w') as f:
 			f.write(tpl)

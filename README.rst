@@ -88,5 +88,6 @@ Python Dependencies:
  * gevent
  * gevent_zeromq
  * cake
+ * argparse
  * jinja2
  * nose
