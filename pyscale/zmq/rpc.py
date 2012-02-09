@@ -1,4 +1,4 @@
-#! /usr/bin/env python2.6
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import logging
@@ -55,7 +55,7 @@ class RpcWorker(gevent.Greenlet):
 					self.send(envelope, reply)
 
 	def handle(self, requests):
-		logging.info("[zmq] <~ self%s" % ''.join([format_method(*req) for req in requests]))
+		logging.debug("[zmq] <~ self%s" % ''.join([format_method(*req) for req in requests]))
 
 		# loop request chain
 		module = self.server.module

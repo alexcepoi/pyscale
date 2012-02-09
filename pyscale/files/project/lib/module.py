@@ -1,7 +1,7 @@
-#! /usr/bin/env python2.6
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from pyscale.lib.module import BaseModule
+from pyscale.lib.module import BaseModule, job
 
 
 class Module(BaseModule):

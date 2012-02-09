@@ -1,4 +1,4 @@
-#! /usr/bin/env python2.6
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import logging
@@ -148,7 +148,7 @@ class Socket(object):
 
 	def _send(self, blob):
 		self._sock.send_json(blob)
-		logging.info("[zmq] ~> %s%s" % (self._name, ''.join([format_method(*req) for req in blob])))
+		logging.debug("[zmq] ~> %s%s" % (self._name, ''.join([format_method(*req) for req in blob])))
 		return self._sock.recv_json()
 
 	# pass to proxy

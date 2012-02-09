@@ -1,7 +1,8 @@
-#! /usr/bin/env python2.6
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import inspect
+import types
 import logging
 import os
 import os.path as osp
@@ -19,6 +20,11 @@ from ..zmq import Socket, MultiSocket, RpcServer
 
 # project
 from config.app import Configuration
+
+
+def job(method):
+	method.job = True
+	return method
 
 
 class BaseModule(object):
@@ -42,6 +48,15 @@ class BaseModule(object):
 		# zmq REQ/REP API
 		self.rpc = RpcServer(self, "ipc://tmp/sockets/rpc/%s.sock" % self.name)
 		self.rpc.run()
+
+		# spawn jobs
+		bases = self.__class__.__mro__
+		for base in bases:
+			for func in base.__dict__.values():
+				if getattr(func, 'job', None):
+					method = types.MethodType(func, self, self.__class__)
+					self.jobs.spawn(method)
+
 
 	def run(self):
 		""" Run the current module (start greenlets) """
