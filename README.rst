@@ -21,7 +21,7 @@ Tasks
 ---------------------------------------------------
 You can manage and debug your modules using built-in tasks. Type 'cake' at a
 bash prompt when inside your project to see available tasks and what they do.
-You can also define your own taks.
+You can also define your own task.
 
 Commands
 ---------------------------------------------------
